@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QUIK插件开发文档 - 搜索框</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/docs/index.css">
+</head>
+<body>
+    <div class="nav">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 456 128">
+            <circle cx="64" cy="64" r="40" stroke="black" stroke-width="3" fill="transparent"></circle>
+            <line x1="74" y1="74" x2="104" y2="104" style="stroke:rgb(0,0,0);stroke-width:3;"></line>
+            <path d="M148 24L148 68Q148 104 180 104Q212 104 212 68L212 24" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+        </svg>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/搜索框.html" class="act">搜索框</a></li><li><a href="/docs/API/链接.html">链接</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/主菜单.html">主菜单</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/存储.html">存储</a></li></ul></li></ul>
+    </div>
+    <div class="content">
+        <div class="markdown-body"><a name="搜索框 quik.omnibox"></a><h1>搜索框 <code>quik.omnibox</code></h1><p><code>quik.omnibox</code>提供了有关搜索、搜索联想、搜索框的一些API，你可以通过这个API操作搜索、搜索联想、搜索框。</p>
+<blockquote>
+<p>由于<code>quik.omnibox</code>涉及API较多，本文档可能不是很好读。 ——作者</p>
+</blockquote>
+<a name="搜索"></a><h2>搜索</h2><p><code>quik.omnibox.addNewType</code>方法可以在特定条件下改变搜索框回车的事件，使用方式如下：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">omnibox</span>.<span class="hljs-title function_">addNewType</span>({
+    <span class="hljs-attr">check</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+        <span class="hljs-comment">// 判断text是否符合条件，必须为同步方法</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-comment">/* true / false */</span>
+    },
+    <span class="hljs-attr">enter</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+        <span class="hljs-comment">// 回车事件</span>
+    },
+    <span class="hljs-attr">icon</span>:<span class="hljs-string">&quot;...&quot;</span>,<span class="hljs-comment">// icon html</span>
+    <span class="hljs-attr">submit</span>:<span class="hljs-string">&quot;...&quot;</span> <span class="hljs-comment">// submit icon html</span>
+})</code></pre><p>这里提供一个实例，当搜索框输入&quot;12345&quot;时，icon,submit icon变成另一个，回车弹出一个“12345”弹窗。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">omnibox</span>.<span class="hljs-title function_">addNewType</span>({
+    <span class="hljs-attr">check</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+        <span class="hljs-keyword">return</span> text==<span class="hljs-string">&#x27;12345&#x27;</span>;
+    },
+    <span class="hljs-attr">enter</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+        quik.<span class="hljs-title function_">alert</span>(text);
+    },
+    <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e813&#x27;</span>),<span class="hljs-comment">// icon html</span>
+    <span class="hljs-attr">submit</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e813&#x27;</span>) <span class="hljs-comment">// submit icon html</span>
+})</code></pre><p><strong>使用本方法时需谨慎，否则可能造成正常的搜索功能不可用。</strong></p>
+<a name="搜索联想"></a><h2>搜索联想</h2><p><code>quik.omnibox.addNewSug</code>方法可以在特定条件下改变搜索框回车的事件，使用方式如下：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">omnibox</span>.<span class="hljs-title function_">addNewSug</span>({
+    <span class="hljs-attr">check</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+        <span class="hljs-comment">// 判断text是否符合条件，必须为同步方法</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-comment">/* true / false */</span>
+    },
+    <span class="hljs-attr">get</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text,getSugs</span>){
+        <span class="hljs-keyword">var</span> sugs=<span class="hljs-title function_">getSugs</span>();
+        sugs.<span class="hljs-title function_">unshift</span>({
+              <span class="hljs-attr">icon</span>:<span class="hljs-string">&#x27;...&#x27;</span>,<span class="hljs-comment">// icon html</span>
+              <span class="hljs-attr">text</span>:<span class="hljs-string">&#x27;...&#x27;</span>,<span class="hljs-comment">// 搜索联想内容</span>
+              <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+                <span class="hljs-comment">// 点击搜索联想的事件</span>
+              }
+            })
+        <span class="hljs-comment">// ...</span>
+        <span class="hljs-keyword">return</span> sugs;
+
+        <span class="hljs-comment">//或者如果需要异步请求的话可以这样:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">reslove</span>){
+            <span class="hljs-keyword">var</span> sugs=<span class="hljs-title function_">getSugs</span>();
+            <span class="hljs-comment">// ...</span>
+            <span class="hljs-title function_">reslove</span>(sugs);
+        })
+    },
+    <span class="hljs-attr">interrupt</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        <span class="hljs-comment">// 在get为异步时，在get完成之前text更新，这个方法会被调用以中断get操作，比如取消请求等（非必须）</span>
+    }
+})</code></pre><p>这里提供一个实例，当搜索框输入一个整数，为奇数时显示一个奇数的搜索联想。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">omnibox</span>.<span class="hljs-title function_">addNewSug</span>({
+    <span class="hljs-attr">check</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(text)%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>
+    },
+    <span class="hljs-attr">get</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">text,getSugs</span>){
+        <span class="hljs-keyword">var</span> sugs=<span class="hljs-title function_">getSugs</span>();
+        sugs.<span class="hljs-title function_">unshift</span>({
+              <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e813&#x27;</span>),<span class="hljs-comment">// icon html</span>
+              <span class="hljs-attr">text</span>:<span class="hljs-string">&#x27;奇数&#x27;</span>,<span class="hljs-comment">// 搜索联想内容</span>
+              <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+                <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">open</span>(quik.<span class="hljs-property">omnibox</span>.<span class="hljs-title function_">getSearchType</span>().<span class="hljs-title function_">replace</span>(quik.<span class="hljs-property">omnibox</span>.<span class="hljs-property">keywordText</span>,<span class="hljs-string">&#x27;奇数&#x27;</span>))
+              }
+            })
+        <span class="hljs-comment">// ...</span>
+        <span class="hljs-keyword">return</span> sugs;
+    }
+})</code></pre><p>这也是十分影响体验的方法，你需要确认你的搜索联想显示的位置是靠上还是靠下，以此决定是使用<code>sugs.unshift</code>还是<code>sugs.push</code>。</p>
+<a name="搜索"></a><h2>搜索</h2><p>搜索涉及的方法比较多，主要有以下几个：</p>
+<ul>
+<li><p><code>quik.omnibox.getSearchType() =&gt;String</code> 返回当前设置的搜索引擎的链接，如“<a href="https://cn.bing.com/search?q=%keyword%'%E2%80%9D">https://cn.bing.com/search?q=%keyword%&#39;”</a></p>
+</li>
+<li><p><code>quik.omnibox.getSearchTypeIndex() =&gt;String</code> 返回当前设置的搜索引擎的标识，如“user_7650962019”（随机生成）</p>
+</li>
+<li><p><code>quik.omnibox.getSearchTypeList() =&gt;object</code> 返回用户的搜索引擎列表，如：</p>
+<pre><code class="hljs hljs-json"><span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;bing&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://cn.bing.com/search?q=%keyword%&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;baidu&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://www.baidu.com/s?wd=%keyword%&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;so&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://so.com/s?q=%keyword%&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;sogou&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://sogou.com/web?query=%keyword%&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;google&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://google.com/search?q=%keyword%&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;user_7650962019&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://user.com/search?q=%keyword%&quot;</span>
+<span class="hljs-punctuation">}</span></code></pre></li>
+<li><p><code>quik.omnibox.setSearchType(typeIndex)</code> 修改当前搜索引擎，传入对应搜索引擎的标识</p>
+</li>
+<li><p><code>quik.omnibox.setSearchList(object)</code> 修改搜索引擎列表，object格式如上面一样。</p>
+</li>
+<li><p><code>quik.omnibox.search.on(event,fn)</code> 监听搜索引擎变化</p>
+<p>  支持的事件：</p>
+<ul>
+<li><code>typelistchange</code> 搜索引擎列表变化</li>
+<li><code>nowtypechange</code> 当前搜索引擎变化</li>
+</ul>
+</li>
+<li><p><code>quik.omnibox.keywordText</code>返回<code>&quot;%keyword%&quot;</code></p>
+</li>
+</ul>
+<a name="搜索框"></a><h2>搜索框</h2><p>对于搜索框，<code>quik.omnibox</code>也提供了一些方法控制。</p>
+<ul>
+<li><code>quik.omnibox.value() =&gt;String</code> 获取搜索框内容</li>
+<li><code>quik.omnibox.value(text:String)</code> 设置搜索框内容</li>
+<li><code>quik.omnibox.focus()</code> 聚焦搜索框</li>
+<li><code>quik.omnibox.blur()</code> 使搜索框失焦</li>
+<li><code>quik.omnibox.isblur() =&gt;Boolean</code> 搜索框是否失焦</li>
+<li><code>quik.omnibox.setAutoFocus(Boolean)</code> 设置打开页面时自动聚焦搜索框</li>
+<li><code>quik.omnibox.setJustSearch(Boolean)</code> 设置搜索框仅搜索</li>
+<li><code>quik.omnibox.on/off(event,fn(e))</code> 监听搜索框变化<ul>
+<li><code>input</code> 搜索框内容变动，e=搜索框内容（String）</li>
+<li><code>beforeenter</code> 搜索框回车事件发生之前，e=搜索框内容（String）</li>
+<li><code>afterenter</code> 搜索框回车事件发生之后，e=搜索框内容（String）</li>
+<li><code>focus</code> 搜索框聚焦，e=搜索框input（Element）</li>
+<li><code>blur</code> 搜索框聚焦，e=搜索框input（Element）</li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+    <div class="navbtn">
+        <span></span><span></span>
+    </div>
+    <script>
+        var b=document.querySelector('.navbtn');
+        var n=document.querySelector('.nav');
+        b.onclick=function(){
+            if(b.classList.contains('act')){
+                b.classList.remove('act');
+                n.classList.remove('act');
+            }else{
+                b.classList.add('act');
+                n.classList.add('act');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QUIK插件开发文档 - 背景</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/docs/index.css">
+</head>
+<body>
+    <div class="nav">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 456 128">
+            <circle cx="64" cy="64" r="40" stroke="black" stroke-width="3" fill="transparent"></circle>
+            <line x1="74" y1="74" x2="104" y2="104" style="stroke:rgb(0,0,0);stroke-width:3;"></line>
+            <path d="M148 24L148 68Q148 104 180 104Q212 104 212 68L212 24" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+        </svg>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/链接.html">链接</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/主菜单.html">主菜单</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/背景.html" class="act">背景</a></li><li><a href="/docs/API/存储.html">存储</a></li></ul></li></ul>
+    </div>
+    <div class="content">
+        <div class="markdown-body"><a name="背景 quik.background"></a><h1>背景 <code>quik.background</code></h1><a name="使用方式"></a><h2>使用方式</h2><p><code>quik.background</code>提供了一些用于控制背景的API，你主要可以通过<code>quik.background.pushBgDrawer(options)</code>的方法来自定义一个背景显示方式。</p>
+<p>代码结构如下：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> bgdrawerid= <span class="hljs-comment">/* 返回一个背景标识 */</span> quik.<span class="hljs-property">background</span>.<span class="hljs-title function_">pushBgDrawer</span>({
+    <span class="hljs-attr">session</span>: addonData.<span class="hljs-property">session</span>, <span class="hljs-comment">//必须添加，一个插件仅能添加一次</span>
+    <span class="hljs-attr">init</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) {
+        <span class="hljs-comment">// init 初始化，在注册时被调用一次，一般用于pushTab，以及处理tab内的交互等</span>
+
+        e.<span class="hljs-title function_">setbg</span>({
+            <span class="hljs-attr">type</span>:<span class="hljs-string">&quot;...&quot;</span>, <span class="hljs-comment">// 背景标识</span>
+            <span class="hljs-attr">data</span>:{<span class="hljs-comment">/*...*/</span>} <span class="hljs-comment">// data</span>
+        }) <span class="hljs-comment">// 设置背景</span>
+
+        <span class="hljs-keyword">var</span> tab=e.<span class="hljs-title function_">pushBgTab</span>({
+            <span class="hljs-attr">tab</span>:<span class="hljs-string">&quot;tabName&quot;</span>,
+            <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;...html...&quot;</span>
+        }) <span class="hljs-comment">// 在背景设置添加一个Tab，放回content的Element</span>
+
+        e.<span class="hljs-property">bgf</span> <span class="hljs-comment">// 背景处的Element</span>
+        e.<span class="hljs-property">type</span> <span class="hljs-comment">// 本背景显示方式的标识</span>
+    },
+    <span class="hljs-attr">cancel</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">n</span>) {
+        <span class="hljs-comment">// 该方法用于切换其他背景时，取消本背景的所有影响，例如清空背景区域</span>
+
+        n.<span class="hljs-property">bgf</span> <span class="hljs-comment">// 背景处的Element</span>
+        n.<span class="hljs-property">type</span> <span class="hljs-comment">// 本背景显示方式的标识</span>
+    },
+    <span class="hljs-attr">draw</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>){
+        <span class="hljs-comment">// 主方法，用于根据传入数据渲染背景，当切换显示本背景或本背景数据更改时被调用，</span>
+        n.<span class="hljs-property">bgf</span> <span class="hljs-comment">// 背景处的Element</span>
+        n.<span class="hljs-property">data</span> <span class="hljs-comment">// 背景数据，即setbg时的BgData里的data</span>
+    }
+  })</code></pre><p>同时<code>quik.background</code>也提供了<code>getbg</code>和<code>setbg</code>的方法，用于获取和设置背景。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">background</span>.<span class="hljs-title function_">getbg</span>() <span class="hljs-comment">// {type:背景标识,data:{...}}</span>
+quik.<span class="hljs-property">background</span>.<span class="hljs-title function_">setbg</span>({
+    <span class="hljs-attr">type</span>:<span class="hljs-string">&quot;...&quot;</span>, <span class="hljs-comment">// 背景标识</span>
+    <span class="hljs-attr">data</span>:{<span class="hljs-comment">/*...*/</span>} <span class="hljs-comment">// data</span>
+})</code></pre><p><code>quik.background</code>也可以通过<code>on</code>/<code>off</code>监听背景变化</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">background</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;change&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>){
+    n.<span class="hljs-property">type</span> <span class="hljs-comment">// 背景标识，即setbg时的BgData里的type</span>
+    n.<span class="hljs-property">data</span> <span class="hljs-comment">// 背景数据，即setbg时的BgData里的data</span>
+})</code></pre><p>这里提供一个实例，它可以实现一个自定义显示背景图片Url的功能，以帮助理解。</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> initsto=quik.<span class="hljs-title function_">storage</span>(<span class="hljs-string">&#x27;myaddon_sto&#x27;</span>);
+<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> initsto.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;url&#x27;</span>)==<span class="hljs-string">&#x27;undefined&#x27;</span>){
+    initsto.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;url&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>);
+}
+
+<span class="hljs-keyword">var</span> bgdrawerid=quik.<span class="hljs-property">background</span>.<span class="hljs-title function_">pushBgDrawer</span>({
+    <span class="hljs-attr">session</span>: addonData.<span class="hljs-property">session</span>, 
+    <span class="hljs-attr">init</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) {
+        <span class="hljs-keyword">var</span> tab=e.<span class="hljs-title function_">pushBgTab</span>({
+            <span class="hljs-attr">tab</span>:<span class="hljs-string">&quot;MyBg&quot;</span>,
+            <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;&lt;input type=\&quot;text\&quot; placeholder=\&quot;输入图片URL\&quot;/&gt;&lt;button&gt;确定&lt;/button&gt;&quot;</span>
+        }) 
+
+        <span class="hljs-keyword">var</span> input=tab.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;input&#x27;</span>);
+        input.<span class="hljs-property">value</span>=initsto.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;url&#x27;</span>);
+
+        <span class="hljs-keyword">var</span> submitbtn=tab.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;button&#x27;</span>);
+        submitbtn.<span class="hljs-property">onclick</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            <span class="hljs-keyword">if</span>(input.<span class="hljs-property">value</span>.<span class="hljs-title function_">trim</span>()){
+                e.<span class="hljs-title function_">setbg</span>({
+                    <span class="hljs-attr">type</span>:e.<span class="hljs-property">type</span>,
+                    <span class="hljs-attr">data</span>:{
+                        <span class="hljs-attr">url</span>:input.<span class="hljs-property">value</span>.<span class="hljs-title function_">trim</span>()
+                    }
+                })
+            }
+        }
+    },
+    <span class="hljs-attr">cancel</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">n</span>) {
+        n.<span class="hljs-property">bgf</span>.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">&#x27;&#x27;</span>;
+    },
+    <span class="hljs-attr">draw</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>){
+        n.<span class="hljs-property">bgf</span>.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">&#x27;&lt;div class=&quot;mybg_frame&quot;&gt;&lt;img src=&quot;&#x27;</span>+n.<span class="hljs-property">data</span>.<span class="hljs-property">url</span>+<span class="hljs-string">&#x27;&quot;/&gt;&lt;/div&gt;&#x27;</span>;
+    }
+  })
+
+quik.<span class="hljs-title function_">addStyle</span>(<span class="hljs-string">`.mybg_frame,.mybg_frame img{
+    width:100%;
+    height:100%;
+}
+.mybg_frame img{
+    object-fit:cover;
+    object-position:center center;
+}`</span>)</code></pre><p>以上就是一个简单的显示背景的实例，你还可以通过添加样式等使其更好看，甚至添加交互功能，你也可以使用不限于是图片的东西做背景，只要你能够以html的形式在bgf中显示出来就够了，发挥想象吧！</p>
+</div>
+    </div>
+    <div class="navbtn">
+        <span></span><span></span>
+    </div>
+    <script>
+        var b=document.querySelector('.navbtn');
+        var n=document.querySelector('.nav');
+        b.onclick=function(){
+            if(b.classList.contains('act')){
+                b.classList.remove('act');
+                n.classList.remove('act');
+            }else{
+                b.classList.add('act');
+                n.classList.add('act');
+            }
+        }
+    </script>
+</body>
+</html>
