@@ -19,7 +19,93 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/链接.html">链接</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/设置.html" class="act">设置</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/主菜单.html">主菜单</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/存储.html">存储</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="设置"></a><h1>设置</h1><p>正在施工中。。。</p>
+        <div class="markdown-body"><a name="设置"></a><h1>设置</h1><p>QUIK起始页提供一个方便的API用于管理插件及QUIK起始页的设置。主要有以下三个构造函数：</p>
+<ul>
+<li><code>quik.Setting</code></li>
+<li><code>quik.SettingGroup</code></li>
+<li><code>quik.SettingItem</code></li>
+</ul>
+<p>使用方法如下：</p>
+<pre><code class="hljs hljs-javascript">
+<span class="hljs-keyword">var</span> mySetting=<span class="hljs-keyword">new</span> quik.<span class="hljs-title class_">Setting</span>({
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;设置标题&quot;</span>
+})
+
+<span class="hljs-keyword">var</span> myGroup=<span class="hljs-keyword">new</span> quik.<span class="hljs-title class_">SettingGroup</span>({
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;设置组标题&quot;</span>,
+    <span class="hljs-attr">index</span>:<span class="hljs-number">0</span> <span class="hljs-comment">//排序，index&gt;=0，index越小排序越前，若不设置，则排最后</span>
+})
+
+<span class="hljs-keyword">var</span> myItem=<span class="hljs-keyword">new</span> quik.<span class="hljs-title class_">SettingItem</span>({
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;设置项标题&quot;</span>,
+    <span class="hljs-attr">message</span>:<span class="hljs-string">&quot;设置项描述&quot;</span>, <span class="hljs-comment">//可不设置</span>
+    <span class="hljs-attr">index</span>:<span class="hljs-number">0</span>, <span class="hljs-comment">// 同上</span>
+    <span class="hljs-attr">type</span>:<span class="hljs-string">&quot;boolean&quot;</span>, <span class="hljs-comment">//设置项类型，详见下方</span>
+    <span class="hljs-attr">get</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        <span class="hljs-keyword">return</span> <span class="hljs-comment">/*根据存储或其他和type返回对应内容*/</span>
+
+        <span class="hljs-comment">// 或</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">reslove</span>){
+            <span class="hljs-title function_">reslove</span>(<span class="hljs-comment">/* 根据存储或其他和type返回对应内容 */</span>)
+        })
+    },
+    <span class="hljs-attr">check</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">content</span>){
+        <span class="hljs-comment">// 对用户返回内容进行检查（该方法非必须）</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span> <span class="hljs-comment">//或 false</span>
+    },
+    <span class="hljs-attr">callback</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">content</span>){
+        <span class="hljs-comment">// 根据用户设置执行相关</span>
+    },
+    <span class="hljs-attr">init</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        <span class="hljs-comment">// 一些type会需要这个方法，详见下方</span>
+    }
+})
+
+myGroup.<span class="hljs-title function_">addNewItem</span>(myItem);<span class="hljs-comment">// 添加Item至Group</span>
+mySetting.<span class="hljs-title function_">addNewGroup</span>(myGroup); <span class="hljs-comment">// 添加Group至Setting</span>
+
+mySetting.<span class="hljs-title function_">open</span>() <span class="hljs-comment">//显示设置窗口</span>
+mySetting.<span class="hljs-title function_">close</span>() <span class="hljs-comment">//关闭设置窗口</span></code></pre><p>设置项的类型：</p>
+<ul>
+<li><p><code>string</code>：字符串</p>
+</li>
+<li><p><code>number</code>：数字</p>
+</li>
+<li><p><code>boolean</code>：开关</p>
+</li>
+<li><p><code>range</code>：拖动条</p>
+<p>  需要添加init方法，返回拖动的范围，即<code>[min:number,max:number]</code>，如<code>[0,100]</code>。</p>
+</li>
+<li><p><code>select</code>：选择</p>
+<p>  需要添加init方法，返回选择的项，即<code>{key:value,...}</code>。会被渲染为<code>&lt;option value=&quot;key&quot;&gt;value&lt;/option&gt;...</code></p>
+</li>
+<li><p><code>color</code>：颜色</p>
+</li>
+<li><p><code>null</code>：点击即调用callback，content为undefined</p>
+</li>
+</ul>
+<p>你可以通过以下方法来控制SettingItem：</p>
+<ul>
+<li><code>setTitle(title:String)</code> 修改设置项标题</li>
+<li><code>setMessage(text:String)</code> 修改设置项描述</li>
+<li><code>setIndex(index:number)</code> 修改设置项index</li>
+<li><code>show()</code> 显示设置项（<strong>设置项默认显示</strong>）</li>
+<li><code>hide()</code> 隐藏设置项</li>
+<li><code>reGet()</code> 在存储或状态更新后，设置显示有时会与实际不同，可以用这个方法再次根据存储或状态渲染设置的<strong>值</strong>，即重新执行get方法</li>
+<li><code>reInit()</code> 在存储或状态更新后，设置显示有时会与实际不同，可以用这个方法再次根据存储或状态渲染设置<strong>选项</strong>，即重新执行init方法</li>
+</ul>
+<p>同样的，你可以通过以下方法控制SettingGroup:</p>
+<ul>
+<li><code>setTitle(title:String)</code> 修改设置组标题</li>
+<li><code>setIndex(index:number)</code> 修改设置组index</li>
+</ul>
+<p>你可以通过以下方法控制Setting:</p>
+<ul>
+<li><code>setTitle(title:String)</code> 修改设置标题</li>
+</ul>
+<blockquote>
+<p>本API基于quik.dialog ——作者</p>
+</blockquote>
 </div>
     </div>
     <div class="navbtn">

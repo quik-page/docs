@@ -19,7 +19,8 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html" class="act">窗口</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/链接.html">链接</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/主菜单.html">主菜单</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/存储.html">存储</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="窗口 quik.dialog"></a><h1>窗口 <code>quik.dialog</code></h1><p><code>new quik.dialog(options)</code>是一个构造函数，可以用于创建窗口，使用方法如下：</p>
+        <div class="markdown-body"><a name="窗口 quik.dialog"></a><h1>窗口 <code>quik.dialog</code></h1><p><code>quik.dialog</code>也是QUIK起始页中的一个基本方法，很多API也基于它。在插件里，这个方法也是很主要的交互场所。</p>
+<p>我们可以使用<code>new quik.dialog(options)</code>来创建窗口，使用方法如下：</p>
 <pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> dialog=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">dialog</span>({
     <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;...html...&quot;</span>, <span class="hljs-comment">// 窗口内容</span>
     <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;dialog-class-name&quot;</span>,<span class="hljs-comment">// 非必须，窗口class名，方便定义样式</span>
@@ -47,7 +48,6 @@ dialog.<span class="hljs-title function_">destory</span>() <span class="hljs-com
 <li><code>getDialogById</code>
   根据id返回对应dialog实例，如没有返回null<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> dialog=quik.<span class="hljs-property">dialog</span>.<span class="hljs-title function_">getDialogById</span>(id<span class="hljs-comment">/*dialog的唯一id*/</span>)</code></pre></li>
 </ul>
-<p><code>quik.dialog</code>也是QUIK起始页中的一个基本方法，很多API也基于它。在插件里，这个方法也是很主要的交互场所。</p>
 </div>
     </div>
     <div class="navbtn">

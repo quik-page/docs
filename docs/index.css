@@ -73,6 +73,7 @@ body {
     padding: 30px 100px;
     box-sizing: border-box;
     position: relative;
+    padding-bottom: 300px;
 }
 
 .navbtn{
