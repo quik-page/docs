@@ -22,17 +22,8 @@ function justtext(text){
     return text.replace(/<[^>]+>/g,'')
 }
 
-let comments={};
+let comments=JSON.parse(fs.readFileSync(path.join(__dirname,'comments.json')).toString());
 let root='/docs';
-let groups=fs.readdirSync(path.join(__dirname,'src'));
-for(let group of groups){
-    comments[group]=[];
-    let items=fs.readdirSync(path.join(__dirname,'src',group));
-    for(let item of items){
-        comments[group].push(item.replace('.md',''));
-    }
-}
-
 let navhtml='';
 for(let group in comments){
     navhtml+='<li><div class="title">'+group+'</div><ul>';
@@ -41,6 +32,7 @@ for(let group in comments){
     }
     navhtml+='</ul></li>'
 }
+
 
 let mb=fs.readFileSync(path.join(__dirname,'build/mb.html')).toString();
 

@@ -16,10 +16,119 @@
             <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
             <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
         </svg>
-        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/链接.html">链接</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/二级菜单.html" class="act">二级菜单</a></li><li><a href="/docs/API/主菜单.html">主菜单</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/存储.html">存储</a></li></ul></li></ul>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html" class="act">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="二级菜单"></a><h1>二级菜单</h1><p>正在施工中。。。</p>
+        <div class="markdown-body"><a name="二级菜单 quik.menu"></a><h1>二级菜单 <code>quik.menu</code></h1><p><code>quik.menu</code> API能够创建像下图这样的二级菜单。</p>
+<p><img src="https://image.gumengya.cn/i/2024/06/23/6677cf0886e57.png" alt="二级菜单演示"></p>
+<p>使用方法如下：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> menu=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">menu</span>({
+    <span class="hljs-attr">list</span>:[{
+        <span class="hljs-attr">icon</span>:<span class="hljs-string">&quot;HTMLString&quot;</span>,
+        <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;标题&quot;</span>,
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            <span class="hljs-comment">// 点击事件</span>
+        }
+    },<span class="hljs-comment">/* ... */</span>]
+    <span class="hljs-attr">offset</span>:{<span class="hljs-comment">// 选填两个，单位：px</span>
+        top?:<span class="hljs-title class_">Number</span>,
+        left?:<span class="hljs-title class_">Number</span>,
+        bottom?:<span class="hljs-title class_">Number</span>,
+        right?:<span class="hljs-title class_">Number</span>,
+    }
+});
+
+menu.<span class="hljs-title function_">show</span>(); <span class="hljs-comment">//显示（200ms过渡）</span>
+menu.<span class="hljs-title function_">hide</span>(); <span class="hljs-comment">//隐藏（200ms过渡）</span></code></pre><p>该二级菜单默认置于页面顶层，在点击界面任意位置后就会消失，所以你可以很好的将菜单融入进你的插件中。</p>
+<p>这里提供一个简单的示例：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> menu=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">menu</span>({
+    <span class="hljs-attr">list</span>:[{
+        <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e813&#x27;</span>),
+        <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;Hello&quot;</span>,
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+            menu.<span class="hljs-title function_">show</span>();
+        }
+    },{
+        <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e814&#x27;</span>),
+        <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;Hi&quot;</span>,
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hi&#x27;</span>);
+            menu.<span class="hljs-title function_">show</span>();
+        }
+    }],
+    <span class="hljs-attr">offset</span>:{
+        <span class="hljs-attr">top</span>:<span class="hljs-number">100</span>,
+        <span class="hljs-attr">left</span>:<span class="hljs-number">100</span>
+    }
+});
+
+menu.<span class="hljs-title function_">show</span>();</code></pre><p>你可以通过以下方法控制它：</p>
+<pre><code class="hljs hljs-javascript">menu.<span class="hljs-title function_">show</span>(); <span class="hljs-comment">//显示（200ms过渡）</span>
+menu.<span class="hljs-title function_">hide</span>(); <span class="hljs-comment">//隐藏（200ms过渡）</span>
+menu.<span class="hljs-title function_">destory</span>(); <span class="hljs-comment">//销毁（之后无法操作）</span>
+menu.<span class="hljs-title function_">setOffset</span>({ <span class="hljs-comment">// 对位置重新设置，同样选填两个</span>
+    top?:<span class="hljs-title class_">Number</span>,
+    left?:<span class="hljs-title class_">Number</span>,
+    bottom?:<span class="hljs-title class_">Number</span>,
+    right?:<span class="hljs-title class_">Number</span>,
+})
+menu.<span class="hljs-title function_">setList</span>([ <span class="hljs-comment">// 对菜单项重新设置，填法和原来一样</span>
+    {<span class="hljs-comment">/***/</span>},<span class="hljs-comment">/***/</span>
+])</code></pre><p>结合以上，我们就可以为二级菜单添加鼠标右键绑定：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> menu=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">menu</span>({
+    <span class="hljs-attr">list</span>:[{
+        <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e813&#x27;</span>),
+        <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;Hello&quot;</span>,
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+        }
+    },{
+        <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e814&#x27;</span>),
+        <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;Hi&quot;</span>,
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hi&#x27;</span>);
+        }
+    }],
+    <span class="hljs-attr">offset</span>:{
+        <span class="hljs-attr">top</span>:<span class="hljs-number">100</span>,
+        <span class="hljs-attr">left</span>:<span class="hljs-number">100</span>
+    }
+});
+
+<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;contextmenu&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>){
+    e.<span class="hljs-title function_">preventDefault</span>();
+    menu.<span class="hljs-title function_">setOffset</span>({
+        <span class="hljs-attr">top</span>:e.<span class="hljs-property">pageY</span>,
+        <span class="hljs-attr">left</span>:e.<span class="hljs-property">pageX</span>
+    });
+    menu.<span class="hljs-title function_">show</span>();
+})</code></pre><p><strong>注意：</strong> 虽然示例监听的是document的鼠标右键事件，但实际开发不建议这么做，这样会影响到其他插件和功能的正常使用，建议监听需要的元素就好了。</p>
+<a name="主菜单"></a><h2>主菜单</h2><p>QUIK起始页右上角有一个主菜单，我们提供了一个<code>quik.mainmenu</code>来控制它。</p>
+<p>使用方法如下：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">mainmenu</span>.<span class="hljs-title function_">pushMenu</span>({
+    <span class="hljs-comment">// 一个菜单项内容</span>
+},menuOffset)</code></pre><p>menuOffset选填以下两项：</p>
+<ul>
+<li><code>quik.mainmenu.MAIN_MENU_TOP</code> 添加在主菜单上部（默认）</li>
+<li><code>quik.mainmenu.MAIN_MENU_BOTTOM</code> 添加在主菜单下部</li>
+</ul>
+<p>示例：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">mainmenu</span>.<span class="hljs-title function_">pushMenu</span>({
+    <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e813&#x27;</span>),
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;Hello&quot;</span>,
+    <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>);
+    }
+},quik.<span class="hljs-property">mainmenu</span>.<span class="hljs-property">MAIN_MENU_TOP</span>)
+
+quik.<span class="hljs-property">mainmenu</span>.<span class="hljs-title function_">pushMenu</span>({
+    <span class="hljs-attr">icon</span>:quik.<span class="hljs-property">util</span>.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e814&#x27;</span>),
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;Hi&quot;</span>,
+    <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hi&#x27;</span>);
+    }
+},quik.<span class="hljs-property">mainmenu</span>.<span class="hljs-property">MAIN_MENU_BOTTOM</span>)</code></pre><p>你可以通过这样的方式为你的插件添加入口</p>
 </div>
     </div>
     <div class="navbtn">

@@ -16,10 +16,46 @@
             <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
             <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
         </svg>
-        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/链接.html">链接</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/主菜单.html">主菜单</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/卡片.html" class="act">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/存储.html">存储</a></li></ul></li></ul>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html" class="act">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="卡片"></a><h1>卡片</h1><p>正在施工中。。。</p>
+        <div class="markdown-body"><a name="卡片 quik.card"></a><h1>卡片 <code>quik.card</code></h1><p>卡片在整个QUIK底层API中的地位仅次于<a href="/docs/API/%E7%AA%97%E5%8F%A3.html">窗口</a>，如图所示，这就是一个卡片：</p>
+<p><img src="https://image.gumengya.cn/i/2024/06/23/6677d6c32ac27.png" alt="卡片"></p>
+<p>我们可以通过以下方式创建一个卡片，和<a href="/docs/API/%E7%AA%97%E5%8F%A3.html">窗口</a>创建有些类似，只不过多了位置和大小的控制。</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> card=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">card</span>({
+    <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;HTMLString&quot;</span>,<span class="hljs-comment">//卡片内容</span>
+    <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;className&quot;</span>,<span class="hljs-comment">// 便于控制样式，非必须</span>
+    <span class="hljs-attr">offset</span>:{<span class="hljs-comment">//定义位置，选填两个，单位：px</span>
+        top?:<span class="hljs-title class_">Number</span>,
+        left?:<span class="hljs-title class_">Number</span>,
+        bottom?:<span class="hljs-title class_">Number</span>,
+        right?:<span class="hljs-title class_">Number</span>,
+    },
+
+    <span class="hljs-comment">// 定义宽高，非必须，单位：px</span>
+    <span class="hljs-attr">width</span>:<span class="hljs-title class_">Number</span>,
+    <span class="hljs-attr">height</span>:<span class="hljs-title class_">Number</span>
+})</code></pre><p><strong>卡片默认是不显示的</strong>，你可以通过以下方法控制它：</p>
+<pre><code class="hljs hljs-javascript">card.<span class="hljs-title function_">show</span>();<span class="hljs-comment">// 直接显示</span>
+card.<span class="hljs-title function_">show</span>(<span class="hljs-title class_">Number</span>);<span class="hljs-comment">// 添加一定时间的过渡显示（单位：ms，过渡：透明度）</span>
+card.<span class="hljs-title function_">hide</span>();<span class="hljs-comment">// 直接隐藏</span>
+card.<span class="hljs-title function_">hide</span>(<span class="hljs-title class_">Number</span>);<span class="hljs-comment">// 添加一定时间的过渡隐藏（单位：ms，过渡：透明度）</span>
+card.<span class="hljs-title function_">destory</span>(); <span class="hljs-comment">//销毁卡片</span>
+
+<span class="hljs-comment">//（单位：px）</span>
+card.<span class="hljs-title function_">getWidth</span>() <span class="hljs-comment">//获取卡片宽度</span>
+card.<span class="hljs-title function_">getHeight</span>() <span class="hljs-comment">//获取卡片高度</span>
+card.<span class="hljs-title function_">setWidth</span>(<span class="hljs-title class_">Number</span>) <span class="hljs-comment">//设置卡片宽度</span>
+card.<span class="hljs-title function_">setHeight</span>(<span class="hljs-title class_">Number</span>) <span class="hljs-comment">//设置卡片高度</span>
+card.<span class="hljs-title function_">getOffset</span>() <span class="hljs-comment">//获取卡片位置，返回你所设置的</span>
+card.<span class="hljs-title function_">setOffset</span>({<span class="hljs-comment">//设置卡片位置，选填两个，单位：px</span>
+    top?:<span class="hljs-title class_">Number</span>,
+    left?:<span class="hljs-title class_">Number</span>,
+    bottom?:<span class="hljs-title class_">Number</span>,
+    right?:<span class="hljs-title class_">Number</span>,
+},<span class="hljs-title class_">Number</span><span class="hljs-comment">/*设置位移过渡（单位：ms）*/</span>)
+
+card.<span class="hljs-title function_">getCardDom</span>(); <span class="hljs-comment">//获取卡片Element，便于设置交互</span></code></pre><p>正在施工。。。</p>
 </div>
     </div>
     <div class="navbtn">
