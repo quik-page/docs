@@ -9,9 +9,13 @@ const renderer = {
         return `<a name="${justtext(text)}"></a><h${level}>${text}</h${level}>`
     },
     code(code, infostring, escaped){
-        return `<pre><code class="hljs hljs-${infostring}">${hljs.highlight(code,{
-    language:infostring
-}).value}</code></pre>`
+        if(infostring){
+            return `<pre><code class="hljs hljs-${infostring}">${hljs.highlight(code,{
+                language:infostring
+            }).value}</code></pre>`
+        }else{
+            return `<pre><code class="hljs">${code}</code></pre>`
+        }
     }
 }
 marked.use({

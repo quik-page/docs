@@ -19,7 +19,23 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html" class="act">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="安装插件开发环境"></a><h1>安装插件开发环境</h1><p>正在施工...</p>
+        <div class="markdown-body"><a name="安装插件开发环境"></a><h1>安装插件开发环境</h1><p>开发QUIK起始页插件首先需要安装插件开发环境。</p>
+<p><strong>0.</strong> 在浏览器安装QUIK起始页扩展（只有扩展支持添加开发者端口）</p>
+<p><strong>1.</strong> 首先先确认你已经安装了nodejs，打开电脑的命令行，输入<code>node -v</code>。</p>
+<p>如果显示版本号，请检查node版本是否&gt;=12，如果不是，请升级（node支持win7的最后版本为v12）。如果没有显示，请到官网下载nodejs并安装，这部分请自行百度。</p>
+<p><strong>2.</strong> 如果你安装了git，那么你可以在一个目录下执行以下命令</p>
+<pre><code class="hljs">git clone https://github.com/quik-page/addon_dev.git</code></pre><p>如果你没有安装git，请到<a href="https://github.com/quik-page/addon_dev">https://github.com/quik-page/addon_dev</a>点击“Code”&gt;“Download ZIP”，并将其解压到一个目录。</p>
+<p>最后你看到的文件结构大概是这样：</p>
+<pre><code class="hljs">out/
+src/
+- index.js
+util/
+README.md
+build.js
+config.js
+dev.js
+package-lock.json
+package.json</code></pre><p><strong>3.</strong> 进入该目录，执行<code>npm i</code>，插件开发环境就安装完成了！</p>
 </div>
     </div>
     <div class="navbtn">

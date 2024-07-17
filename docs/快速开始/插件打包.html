@@ -19,7 +19,10 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html" class="act">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="插件打包"></a><h1>插件打包</h1><p>正在施工...</p>
+        <div class="markdown-body"><a name="插件打包"></a><h1>插件打包</h1><pre><code class="hljs">node build.js</code></pre><p>运行这个命令，在<code>out/</code>目录就会输出打包结果。</p>
+<pre><code class="hljs">index.js
+version.txt //这是随你定义的update生成</code></pre><p><code>index.js</code>就是插件本体，也就是可以使用“从第三方文件添加插件”安装的，本地安装的插件不支持更新。</p>
+<p>你也可以将这两个文件上传到你的网站，然后就可以使用“从第三方链接添加插件”安装，但一定要配置好跨域，在线安装的插件就可以更新。当你有新版本时，只需要将新的<code>index.js</code>,<code>version.txt</code>替换原来的就可以了。</p>
 </div>
     </div>
     <div class="navbtn">

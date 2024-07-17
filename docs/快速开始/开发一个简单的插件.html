@@ -19,7 +19,59 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html" class="act">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="开发一个简单的插件"></a><h1>开发一个简单的插件</h1><p>正在施工...</p>
+        <div class="markdown-body"><a name="开发一个简单的插件"></a><h1>开发一个简单的插件</h1><p>首先看到我们的开发环境：</p>
+<pre><code class="hljs">out/
+src/
+- index.js
+util/
+README.md
+build.js
+config.js
+dev.js
+package-lock.json
+package.json</code></pre><p>其中<code>src/</code>里的代码就是插件源代码文件，<code>config.js</code>就是插件信息和开发配置。</p>
+<a name="插件配置"></a><h2>插件配置</h2><p>打开config.js，我们可以看到如下配置：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>={
+    <span class="hljs-attr">port</span>:<span class="hljs-number">9966</span>,
+    <span class="hljs-attr">main</span>:<span class="hljs-string">&quot;./src/index.js&quot;</span>,
+    <span class="hljs-attr">addon_details</span>:{
+        <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;HelloWorld&#x27;</span>,
+        <span class="hljs-attr">version_code</span>:<span class="hljs-number">1</span>,
+        <span class="hljs-attr">version</span>:<span class="hljs-string">&#x27;1.0.0&#x27;</span>,
+        <span class="hljs-attr">desc</span>:<span class="hljs-string">&#x27;Hello,World!&#x27;</span>,
+        <span class="hljs-attr">author</span>:<span class="hljs-string">&#x27;You&#x27;</span>,
+        <span class="hljs-attr">icon</span>:<span class="hljs-string">&#x27;&#x27;</span>,
+        <span class="hljs-attr">website</span>:<span class="hljs-string">&#x27;https://siquan001.github.io/&#x27;</span>,
+        <span class="hljs-attr">update</span>:<span class="hljs-string">&#x27;version.txt&#x27;</span>,
+        <span class="hljs-attr">signature</span>:<span class="hljs-string">&#x27;you.hello.world&#x27;</span>
+    }
+}</code></pre><p>一项一项介绍：</p>
+<ul>
+<li><code>port</code>: 开发中使用的端口，请保证所填的是一个0-65536之间的整数，并且该端口未被占用。</li>
+<li><code>main</code>: 代码执行和打包入口，指向插件源代码，QUIK插件使用简单的REM模块化工具，这个后文会讲，请保证所填文件存在，否则运行会报错。</li>
+<li><code>addon_details</code>: 顾名思义，插件信息<ul>
+<li><code>name</code>: 插件名称</li>
+<li><code>version_code</code>: 插件版本序号，作为插件更新的依据，为一个整数。</li>
+<li><code>version</code>: 插件版本号</li>
+<li><code>desc</code>: 插件简介</li>
+<li><code>author</code>: 插件作者</li>
+<li><code>icon</code>: 插件图标（填网址，或&#39;&#39;）</li>
+<li><code>website</code>: 插件网站（填网址，或&#39;&#39;）</li>
+<li><code>update</code>: 填一个文件名，在打包时会自动生成，内容为插件版本序号，在插件检查更新时有着重要作用。</li>
+<li><code>signature</code>: 插件签名，填任意字符串，该签名一经定下，不可修改，这是插件升级校验时的唯一凭据。</li>
+</ul>
+</li>
+</ul>
+<p>你可以根据你的插件进行修改。</p>
+<a name="插件开发"></a><h2>插件开发</h2><p>默认开发环境已经提供了一个示例，它会在页面弹出一个Hello,World!弹窗。我们现在用开发端口试验一下。</p>
+<p>首先执行以下命令：</p>
+<pre><code class="hljs">node dev.js</code></pre><p>如果不出意外的话，可以得到以下输出：</p>
+<pre><code class="hljs">开发端口已打开，请粘贴到开发者端口：
+        http://127.0.0.1:9966/</code></pre><p>打开QUIK起始页（扩展），打开插件管理，点击右上角的“+”，点击“添加开发者端口”，将显示的链接粘贴进去，然后安装完成后，页面就会显示一个“Hello,World!”弹窗。</p>
+<p>打开源代码（src/index.js），将Hello,World!改成Hi,World!，然后刷新起始页，看看发生了什么？执行结果随着代码的变化变化了。这就是开发的基本流程。</p>
+<p>QUIK插件的原理是直接在页面嵌入你的插件的js，所以你可以任意操作DOM和BOM，这给足了自由度。现在试着在代码中添加以下代码：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;aha!&#x27;</span>);
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">style</span>.<span class="hljs-property">opacity</span>=<span class="hljs-string">&#x27;0&#x27;</span>;</code></pre><p>看看会发生什么？是不是就和平常写js一样？QUIK插件只是在其基础上又提供了针对于QUIK起始页的API，我们将会在后文学习。</p>
 </div>
     </div>
     <div class="navbtn">
