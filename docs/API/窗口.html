@@ -16,11 +16,11 @@
             <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
             <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
         </svg>
-        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/窗口.html" class="act">窗口</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">基础</div><ul><li><a href="/docs/基础/REM.html">REM</a></li><li><a href="/docs/基础/内置工具.html">内置工具</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html" class="act">窗口</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
         <div class="markdown-body"><a name="窗口 quik.dialog"></a><h1>窗口 <code>quik.dialog</code></h1><p><code>quik.dialog</code>也是QUIK起始页中的一个基本方法，很多API也基于它。在插件里，这个方法也是很主要的交互场所。</p>
-<p>我们可以使用<code>new quik.dialog(options)</code>来创建窗口，使用方法如下：</p>
+<a name="使用方法"></a><h2>使用方法</h2><p>我们可以使用<code>new quik.dialog(options)</code>来创建窗口，使用方法如下：</p>
 <pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> dialog=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">dialog</span>({
     <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;...html...&quot;</span>, <span class="hljs-comment">// 窗口内容</span>
     <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;dialog-class-name&quot;</span>,<span class="hljs-comment">// 非必须，窗口class名，方便定义样式</span>
@@ -48,7 +48,40 @@ dialog.<span class="hljs-title function_">destroy</span>() <span class="hljs-com
 <li><code>getDialogById</code>
   根据id返回对应dialog实例，如没有返回null<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> dialog=quik.<span class="hljs-property">dialog</span>.<span class="hljs-title function_">getDialogById</span>(id<span class="hljs-comment">/*dialog的唯一id*/</span>)</code></pre></li>
 </ul>
-</div>
+<a name="样式的注意"></a><h2>样式的注意</h2><p>因为一些样式优先级和移动端兼容的原因，你需要注意以下几点。假设你的dialog的class是your-dialog</p>
+<p>当设置dialog宽高时，你需要像这样：</p>
+<pre><code class="hljs hljs-css"><span class="hljs-comment">/* 要加.d-c */</span>
+<span class="hljs-selector-class">.d-c</span><span class="hljs-selector-class">.your-dialog</span>{
+    <span class="hljs-attribute">width</span>:<span class="hljs-number">600px</span>;
+    <span class="hljs-attribute">height</span>:<span class="hljs-number">400px</span>;
+}
+
+<span class="hljs-comment">/*或者(不推荐)*/</span>
+<span class="hljs-selector-class">.your-dialog</span>{
+    <span class="hljs-attribute">min-width</span>:<span class="hljs-number">600px</span>;
+    <span class="hljs-attribute">min-height</span>:<span class="hljs-number">400px</span>;
+}</code></pre><p>或者在你的dialog里套一个div.allcontent，也可以设置。</p>
+<pre><code class="hljs hljs-css"><span class="hljs-selector-class">.your-dialog</span> <span class="hljs-selector-class">.allcontent</span>{
+    <span class="hljs-attribute">width</span>:<span class="hljs-number">600px</span>;
+    <span class="hljs-attribute">height</span>:<span class="hljs-number">400px</span>;
+}</code></pre><p>同时，无论如何，当屏幕宽度小于600px时，dialog的宽度将变为<code>calc(100% - 20px)</code>（减去padding），所以也要做好适配的准备</p>
+<p>如果你修改了padding，那么你也要针对600px以下情况进行修改：</p>
+<pre><code class="hljs hljs-css"><span class="hljs-selector-class">.d-c</span><span class="hljs-selector-class">.your-dialog</span>{
+    <span class="hljs-attribute">width</span>:<span class="hljs-number">600px</span>;
+    <span class="hljs-attribute">height</span>:<span class="hljs-number">400px</span>;
+    <span class="hljs-attribute">padding</span>:<span class="hljs-number">0</span>;
+}
+
+<span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">600px</span>){
+    <span class="hljs-selector-class">.dialog</span><span class="hljs-selector-class">.mobile-show-full</span> <span class="hljs-selector-class">.d-c</span><span class="hljs-selector-class">.your-dialog</span> {
+        <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+        <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;
+    }
+    <span class="hljs-comment">/*或*/</span>
+    <span class="hljs-selector-class">.dialog</span> <span class="hljs-selector-class">.d-c</span><span class="hljs-selector-class">.your-dialog</span> {
+        <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+    }
+}</code></pre></div>
     </div>
     <div class="navbtn">
         <span></span><span></span>

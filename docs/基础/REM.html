@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QUIK插件开发文档 - REM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/docs/index.css">
+</head>
+<body>
+    <div class="nav">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 456 128">
+            <circle cx="64" cy="64" r="40" stroke="black" stroke-width="3" fill="transparent"></circle>
+            <line x1="74" y1="74" x2="104" y2="104" style="stroke:rgb(0,0,0);stroke-width:3;"></line>
+            <path d="M148 24L148 68Q148 104 180 104Q212 104 212 68L212 24" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+        </svg>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">基础</div><ul><li><a href="/docs/基础/REM.html" class="act">REM</a></li><li><a href="/docs/基础/内置工具.html">内置工具</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
+    </div>
+    <div class="content">
+        <div class="markdown-body"><a name="REM"></a><h1>REM</h1><a name="示例"></a><h2>示例</h2><p>REM是一个适用于QUIK插件开发的模块化系统。基本使用方式是用<code>_REQUIRE_(filepath)</code>链接文件，如下：</p>
+<p>假如有以下文件目录结构：</p>
+<pre><code class="hljs">util/
+ - c.js
+a.js
+b.js</code></pre><p>a.js：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> c=<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./util/c.js&#x27;</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">c</span>(<span class="hljs-string">&#x27;01&#x27;</span>));
+<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./b.js&#x27;</span>)</code></pre><p>b.js:</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">c</span>(<span class="hljs-string">&#x27;02&#x27;</span>));</code></pre><p>util/c.js:</p>
+<pre><code class="hljs hljs-javascript">(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">c</span>(<span class="hljs-params">str</span>){
+        <span class="hljs-keyword">return</span> str.<span class="hljs-title function_">replaceAll</span>(<span class="hljs-string">&#x27;0&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>);
+    }
+    <span class="hljs-keyword">return</span> c;
+})()</code></pre><p>以a.js为解析入口，最终输出的即为：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> c=(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">c</span>(<span class="hljs-params">str</span>){
+        <span class="hljs-keyword">return</span> str.<span class="hljs-title function_">replaceAll</span>(<span class="hljs-string">&#x27;0&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>);
+    }
+    <span class="hljs-keyword">return</span> c;
+})()
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">c</span>(<span class="hljs-string">&#x27;01&#x27;</span>));
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">c</span>(<span class="hljs-string">&#x27;02&#x27;</span>));</code></pre><p>没错，REM所做的就是把几个文件的代码简单拼接起来，虽然比较简陋，但对于一个插件的开发已经完全够了。</p>
+<a name="使用方式"></a><h2>使用方式</h2><p>在使用时，在代码中嵌入<code>_REQUIRE_(&#39;./module.js&#39;)</code>，REM就会把<code>./module.js</code>中的代码原封不动地替换掉<code>_REQUIRE_(&#39;./module.js&#39;)</code>。</p>
+<p>使用REM时也需要注意一些东西：</p>
+<ol>
+<li><p>在使用<code>_REQUIRE_(&#39;./module.js&#39;)</code>时，<code>./</code>不可省略。</p>
+</li>
+<li><p><code>_REQUIRE_(filepath)</code>中filepath不可与原js交互</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-comment">// 错误写法</span>
+<span class="hljs-keyword">var</span> modulepath=<span class="hljs-string">&#x27;./module.js&#x27;</span>;
+<span class="hljs-keyword">var</span> <span class="hljs-variable language_">module</span>=<span class="hljs-title function_">_REQUIRE_</span>(modulepath);
+
+<span class="hljs-comment">// 正确写法</span>
+<span class="hljs-keyword">var</span> <span class="hljs-variable language_">module</span>=<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./module.js&#x27;</span>);</code></pre><p> 因为<code>_REQUIRE_()</code>里的参数是独立解析的，不会根据原js的环境而改变，所以你在使用时只往里面放一个单纯的字符串就好，<code>&quot;&quot;</code>,<code>&#39;&#39;</code>,<code>\</code>``均可</p>
+</li>
+<li><p><code>_REQUIRE_(filepath)</code>中filepath的定位是相对于所在的文件的，比如在如下文件目录结构中：</p>
+<pre><code class="hljs">util/
+ - a.js
+modules/
+ - m.js
+index.js</code></pre><p> 无论解析入口是什么，<code>modules/m.js</code>要引用<code>util/a.js</code>也要像这样<code>_REQUIRE_(&#39;../util/a.js&#39;)</code></p>
+</li>
+<li><p>REM并未对循环引用做出阻止，若出现类似a引用b，b也引用a的情况，就会卡死。</p>
+</li>
+</ol>
+<p>REM不只可以引用js，对于json也可以直接引用，因为json可以直接拼接在变量后面。（如下）</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> list=<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./list.json&#x27;</span>)</code></pre><p>REM也可以引用其他文本类文件，如css,html等，会以字符串的形式引用到代码中（如下）。同时，在打包时，也会对引用的css,html进行压缩处理。</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> listhtml=<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./list.html&#x27;</span>)
+<span class="hljs-keyword">var</span> liststyle=<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./list.css&#x27;</span>)</code></pre><a name="建议"></a><h2>建议</h2><p>在实际开发中，我们建议除了解析入口的js以外，其他模块都按照这样的写法：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-comment">// module.js</span>
+(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    <span class="hljs-comment">// code...</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-comment">//...</span>
+})();</code></pre><pre><code class="hljs hljs-javascript"><span class="hljs-comment">// index.js</span>
+<span class="hljs-keyword">var</span> <span class="hljs-variable language_">module</span>=<span class="hljs-title function_">_REQUIRE_</span>(<span class="hljs-string">&#x27;./module.js&#x27;</span>);</code></pre><p>这样就基本满足了模块化的性质，整个QUIK起始页本身也是这样开发的。</p>
+<p>同时对于样式的css也建议独立开来，设一个<code>index.css</code>然后引用到js中再添加样式。</p>
+</div>
+    </div>
+    <div class="navbtn">
+        <span></span><span></span>
+    </div>
+    <script>
+        var b=document.querySelector('.navbtn');
+        var n=document.querySelector('.nav');
+        b.onclick=function(){
+            if(b.classList.contains('act')){
+                b.classList.remove('act');
+                n.classList.remove('act');
+            }else{
+                b.classList.add('act');
+                n.classList.add('act');
+            }
+        }
+    </script>
+</body>
+</html>
