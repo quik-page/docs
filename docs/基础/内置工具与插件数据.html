@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QUIK插件开发文档 - 内置工具与插件数据</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/docs/index.css">
+</head>
+<body>
+    <div class="nav">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 456 128">
+            <circle cx="64" cy="64" r="40" stroke="black" stroke-width="3" fill="transparent"></circle>
+            <line x1="74" y1="74" x2="104" y2="104" style="stroke:rgb(0,0,0);stroke-width:3;"></line>
+            <path d="M148 24L148 68Q148 104 180 104Q212 104 212 68L212 24" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M276 24L306 24M291 24L291 104M276 104L306 104" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+            <path d="M384 24L384 104M424 26L384 68M424 102L384 68" style="fill:transparent;stroke:rgb(0,0,0);stroke-width:3;"></path>
+        </svg>
+        <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">基础</div><ul><li><a href="/docs/基础/REM.html">REM</a></li><li><a href="/docs/基础/内置工具与插件数据.html" class="act">内置工具与插件数据</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
+    </div>
+    <div class="content">
+        <div class="markdown-body"><a name="内置工具与插件数据"></a><h1>内置工具与插件数据</h1><a name="插件数据 addonData"></a><h2>插件数据 <code>addonData</code></h2><ul>
+<li><p><code>addonData.session</code> 返回当前插件Session，许多API都需要传入该Session</p>
+</li>
+<li><p><code>addonData.session.id</code> 返回插件id</p>
+</li>
+</ul>
+<a name="内置工具 quik.util"></a><h2>内置工具 <code>quik.util</code></h2><p><code>quik.util</code>内置了一些常用方法，你也可以用<code>util</code>来调用。</p>
+<a name="util.addStyle(css)"></a><h3><code>util.addStyle(css)</code></h3><p>向页面注入样式，传入css字符串。</p>
+<a name="util.b0(number)"></a><h3><code>util.b0(number)</code></h3><p>如果传入的数&lt;10，那么给他补一个0。</p>
+<a name="util.checkDetailsCorrect(check_obj,required_arr)"></a><h3><code>util.checkDetailsCorrect(check_obj,required_arr)</code></h3><p>判断一个对象是否包含所需的必要属性。</p>
+<p>如下：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> obj1={
+    <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
+    <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>
+}
+
+<span class="hljs-keyword">var</span> obj2={
+    <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
+    <span class="hljs-attr">c</span>:<span class="hljs-number">2</span>
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkDetailsCorrect</span>(obj1,[<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>])); <span class="hljs-comment">// true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkDetailsCorrect</span>(obj2,[<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>])); <span class="hljs-comment">// false</span></code></pre><a name="util.checkSession(session)"></a><h3><code>util.checkSession(session)</code></h3><p>判断一个Session是否正确</p>
+<a name="util.checkUrl(url)"></a><h3><code>util.checkUrl(url)</code></h3><p>判断一个字符串是否有可能为URL（宽判）</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> a=<span class="hljs-string">&#x27;hello&#x27;</span>;
+<span class="hljs-keyword">var</span> b=<span class="hljs-string">&#x27;hello.i&#x27;</span>;
+<span class="hljs-keyword">var</span> c=<span class="hljs-string">&#x27;hello.cn&#x27;</span>;
+<span class="hljs-keyword">var</span> d=<span class="hljs-string">&#x27;hello.&#x27;</span>;
+<span class="hljs-keyword">var</span> e=<span class="hljs-string">&#x27;https://hello/&#x27;</span>;
+<span class="hljs-keyword">var</span> f=<span class="hljs-string">&#x27;https://hello.com/&#x27;</span>;
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkUrl</span>(a)); <span class="hljs-comment">// false </span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkUrl</span>(b)); <span class="hljs-comment">// false</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkUrl</span>(c)); <span class="hljs-comment">// true</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkUrl</span>(d)); <span class="hljs-comment">// false</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkUrl</span>(e)); <span class="hljs-comment">// false</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(util.<span class="hljs-title function_">checkUrl</span>(f)); <span class="hljs-comment">// true</span></code></pre><a name="util.copyText(text)"></a><h3><code>util.copyText(text)</code></h3><p>传入一段文本，复制文本</p>
+<a name="util.createIcon(char)"></a><h3><code>util.createIcon(char)</code></h3><p>传入字符，返回该字符的随机颜色图像的DataURL</p>
+<a name="util.deepClone(any)"></a><h3><code>util.deepClone(any)</code></h3><p>深度克隆对象等</p>
+<a name="util.element(tagname,attrs)"></a><h3><code>util.element(tagname,attrs)</code></h3><p>创建一个HTML元素，赋予指定属性，返回一个<strong>HTMLElement</strong>对象</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> li=util.<span class="hljs-title function_">element</span>(<span class="hljs-string">&#x27;li&#x27;</span>,{
+    <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;hello&quot;</span>,
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;hello-world&quot;</span>
+})
+<span class="hljs-comment">// 返回一个HTMLElement对象，长这样：&lt;li class=&quot;hello&quot; title=&quot;hello-world&quot;&gt;&lt;/li&gt;</span></code></pre><p>正在施工中...</p>
+</div>
+    </div>
+    <div class="navbtn">
+        <span></span><span></span>
+    </div>
+    <script>
+        var b=document.querySelector('.navbtn');
+        var n=document.querySelector('.nav');
+        b.onclick=function(){
+            if(b.classList.contains('act')){
+                b.classList.remove('act');
+                n.classList.remove('act');
+            }else{
+                b.classList.add('act');
+                n.classList.add('act');
+            }
+        }
+    </script>
+</body>
+</html>
