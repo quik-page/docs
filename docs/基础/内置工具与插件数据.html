@@ -63,7 +63,66 @@
     <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;hello&quot;</span>,
     <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;hello-world&quot;</span>
 })
-<span class="hljs-comment">// 返回一个HTMLElement对象，长这样：&lt;li class=&quot;hello&quot; title=&quot;hello-world&quot;&gt;&lt;/li&gt;</span></code></pre><p>正在施工中...</p>
+<span class="hljs-comment">// 返回一个HTMLElement对象，长这样：&lt;li class=&quot;hello&quot; title=&quot;hello-world&quot;&gt;&lt;/li&gt;</span></code></pre><a name="util.query(element,selector,isAll)"></a><h3><code>util.query(element,selector,isAll)</code></h3><p>相当于调用<code>element.querySelector(selector)</code>，<code>isAll</code>为true时相当于<code>element.querySelectorAll(selector)</code></p>
+<a name="util.fangdou(fn,time)"></a><h3><code>util.fangdou(fn,time)</code></h3><p>顾名思义，一个便捷的防抖函数创造器，一般用于input事件防抖，两次调用间隔时间保证最少为time（更多自行搜索
+“防抖函数”）</p>
+<pre><code class="hljs hljs-javascript">input.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;input&#x27;</span>,<span class="hljs-title function_">fangdou</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>); <span class="hljs-comment">// this可以正常访问</span>
+},<span class="hljs-number">1000</span>)) <span class="hljs-comment">// 两次调用间隔时间最少为1000ms</span></code></pre><a name="util.getFavicon(url,callback)"></a><h3><code>util.getFavicon(url,callback)</code></h3><p>获取一个url的网站图标，callback返回链接，如果失败返回false</p>
+<pre><code class="hljs hljs-javascript">util.<span class="hljs-title function_">getFavicon</span>(<span class="hljs-string">&#x27;https://siquan001.github.io/about/&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">icon</span>){
+    <span class="hljs-keyword">if</span>(icon){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(icon); <span class="hljs-comment">// icon链接</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">// icon加载失败</span>
+    }
+})</code></pre><a name="util.getRandomColor()"></a><h3><code>util.getRandomColor()</code></h3><p>返回一个随机颜色，如<code>#B89E01</code></p>
+<a name="util.getRandomHashCache()"></a><h3><code>util.getRandomHashCache()</code></h3><p>获取一个随机19位字符串，如<code>7xs9tbs4l4qlytswgrp</code></p>
+<blockquote>
+<p>这应该是一个命名失误 ——作者</p>
+</blockquote>
+<a name="util.initSet(sto,key,value)"></a><h3><code>util.initSet(sto,key,value)</code></h3><p>初始化设置存储（关于存储方面，详见<a href="/docs/API/%E5%AD%98%E5%82%A8.html">API-存储</a>），设置存储初始值。</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> initsto=quik.<span class="hljs-title function_">storage</span>(<span class="hljs-string">&#x27;mysto&#x27;</span>);
+
+<span class="hljs-comment">// 仅在最开始时初始化生效，所以是**init**Set</span>
+util.<span class="hljs-title function_">initSet</span>(initsto,<span class="hljs-string">&#x27;automode&#x27;</span>,<span class="hljs-literal">false</span>);
+util.<span class="hljs-title function_">initSet</span>(initsto,<span class="hljs-string">&#x27;lang&#x27;</span>,<span class="hljs-string">&#x27;zh-cn&#x27;</span>);
+util.<span class="hljs-title function_">initSet</span>(initsto,<span class="hljs-string">&#x27;bg&#x27;</span>,{
+    <span class="hljs-attr">type</span>:<span class="hljs-number">0</span>,
+    <span class="hljs-attr">src</span>:<span class="hljs-number">1</span>
+});</code></pre><a name="util.joinObj(obj,[obj,...])"></a><h3><code>util.joinObj(obj,[obj,...])</code></h3><p>以第一个对象为基础，以覆盖的方式，合并多个对象</p>
+<pre><code class="hljs hljs-javascript">util.<span class="hljs-title function_">joinObj</span>({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,<span class="hljs-attr">b</span>:<span class="hljs-number">2</span>},{<span class="hljs-attr">a</span>:<span class="hljs-number">2</span>,<span class="hljs-attr">c</span>:<span class="hljs-number">3</span>},{<span class="hljs-attr">b</span>:<span class="hljs-number">4</span>,<span class="hljs-attr">d</span>:<span class="hljs-number">5</span>},{<span class="hljs-attr">e</span>:<span class="hljs-number">6</span>})
+<span class="hljs-comment">/*
+{
+    a:2,
+    b:4,
+    c:3,
+    d:5,
+    e:6
+}
+*/</span></code></pre><a name="util.loadimg(imgurl,callback)"></a><h3><code>util.loadimg(imgurl,callback)</code></h3><p>加载一个图片，成功返回true，失败返回false。</p>
+<pre><code class="hljs hljs-javascript">util.<span class="hljs-title function_">loadimg</span>(<span class="hljs-string">&#x27;http://a.cn/a.png&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">ok</span>){
+    <span class="hljs-keyword">if</span>(ok){
+        <span class="hljs-comment">// 成功</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">// 错误</span>
+    }
+})</code></pre><a name="util.xhr(url,callback,errorback?)"></a><h3><code>util.xhr(url,callback,errorback?)</code></h3><p>使用XMLHttpRequest，get请求url，成功调用callback，传入responseText，失败调用errorback，返回<code>{status,statusText,readyState,responseText}</code></p>
+<pre><code class="hljs hljs-javascript">util.<span class="hljs-title function_">xhr</span>(<span class="hljs-string">&#x27;https://a.cn/a.php&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result); <span class="hljs-comment">// 成功</span>
+},<span class="hljs-keyword">function</span>(<span class="hljs-params">errs</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(errs); <span class="hljs-comment">// 失败</span>
+})</code></pre><p>返回一个abort方法，可以取消请求。</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> xhr=util.<span class="hljs-title function_">xhr</span>(<span class="hljs-string">&#x27;https://a.cn/a.php&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result); <span class="hljs-comment">// 成功</span>
+},<span class="hljs-keyword">function</span>(<span class="hljs-params">errs</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(errs); <span class="hljs-comment">// 失败</span>
+})
+
+xhr.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment">// 取消请求</span></code></pre><a name="util.jsonp(url,callback,callbackKeyName?)"></a><h3><code>util.jsonp(url,callback,callbackKeyName?)</code></h3><p>发起jsonp请求，会自动在url后面加上<code>&amp;传入的callbackKeyName或callback=自动生成的临时方法名</code></p>
+<pre><code class="hljs hljs-javascript">util.<span class="hljs-title function_">xhr</span>(<span class="hljs-string">&#x27;https://a.cn/jsonp.php&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result); <span class="hljs-comment">// 成功</span>
+})</code></pre><p>该方法也像<code>util.xhr</code>一样返回一个abort方法以取消请求。</p>
+<a name="util.requestByExt(details)"></a><h3><code>util.requestByExt(details)</code></h3><p>当QUIK起始页是在浏览器扩展环境下时，可以通过扩展发送跨域请求，请求的details遵循axios配置，具体自行搜索。</p>
 </div>
     </div>
     <div class="navbtn">
