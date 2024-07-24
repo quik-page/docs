@@ -19,8 +19,56 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">基础</div><ul><li><a href="/docs/基础/REM.html">REM</a></li><li><a href="/docs/基础/内置工具与插件数据.html">内置工具与插件数据</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html" class="act">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="插件"></a><h1>插件</h1><p>正在施工中。。。</p>
-</div>
+        <div class="markdown-body"><a name="插件 quik.addon"></a><h1>插件 <code>quik.addon</code></h1><p><code>quik.addon</code>提供了插件相关的API</p>
+<a name="quik.addon.checkUpdate(id)"></a><h2><code>quik.addon.checkUpdate(id)</code></h2><p>检查指定id的插件是否有更新，返回一个Promise。</p>
+<p>比如检查本插件的更新：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">addon</span>.<span class="hljs-title function_">checkUpdate</span>(addonData.<span class="hljs-property">session</span>.<span class="hljs-property">id</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">hasUpdate</span>){
+    <span class="hljs-keyword">if</span>(hasUpdate){
+        <span class="hljs-comment">// 有更新</span>
+    }
+}).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(e)
+    <span class="hljs-comment">// 检查时出错</span>
+})</code></pre><a name="quik.addon.getAddonBySessionId(id)"></a><h2><code>quik.addon.getAddonBySessionId(id)</code></h2><p>根据id获取一个插件的详细信息，若插件存在，返回如下结果：</p>
+<pre><code class="hljs hljs-javascript">{
+    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;插件名称&quot;</span>,
+    <span class="hljs-string">&quot;version_code&quot;</span>: <span class="hljs-number">1</span>, <span class="hljs-comment">// 版本序号</span>
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0&quot;</span>, <span class="hljs-comment">// 版本号</span>
+    <span class="hljs-string">&quot;desc&quot;</span>: <span class="hljs-string">&quot;插件简介&quot;</span>,
+    <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;插件作者&quot;</span>,
+    <span class="hljs-string">&quot;icon&quot;</span>: <span class="hljs-string">&quot;图标链接&quot;</span>,
+    <span class="hljs-string">&quot;website&quot;</span>: <span class="hljs-string">&quot;https://siquan001.github.io/&quot;</span>, <span class="hljs-comment">// 插件网站</span>
+    <span class="hljs-string">&quot;update&quot;</span>: <span class="hljs-string">&quot;version.txt&quot;</span>, <span class="hljs-comment">// 插件升级版本校验文件</span>
+    <span class="hljs-string">&quot;signature&quot;</span>: <span class="hljs-string">&quot;插件签名&quot;</span>, 
+    <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;插件id&quot;</span>,
+    <span class="hljs-string">&quot;marketId&quot;</span>: <span class="hljs-string">&quot;002&quot;</span>, <span class="hljs-comment">//如果是插件商店下载的就会有</span>
+    <span class="hljs-string">&quot;disabled&quot;</span>: <span class="hljs-literal">false</span> <span class="hljs-comment">//是否被禁用</span>
+}</code></pre><p>无则返回undefined</p>
+<p>你也可以通过这种方式获取本插件的信息：</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> my_addon_details=quik.<span class="hljs-property">addon</span>.<span class="hljs-title function_">getAddonBySessionId</span>(addonData.<span class="hljs-property">session</span>.<span class="hljs-property">id</span>)</code></pre><a name="quik.addon.getAddonByMarketId(marketid)"></a><h2><code>quik.addon.getAddonByMarketId(marketid)</code></h2><p>如果安装了这个marketid对应的插件，就会返回该插件的详细信息，无则返回undefined，你可以用于判断一个插件是否安装。</p>
+<a name="quik.addon.getAddonByUrl(url)"></a><h2><code>quik.addon.getAddonByUrl(url)</code></h2><p>如果安装了这个url对应的插件，就会返回该插件的详细信息，无则返回undefined，你可以用于判断一个插件是否安装。</p>
+<a name="quik.addon.installByUrl(url)"></a><h2><code>quik.addon.installByUrl(url)</code></h2><p>请求用户从一个url安装插件，返回一个Promise。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">addon</span>.<span class="hljs-title function_">installByUrl</span>(<span class="hljs-string">&#x27;https://example.com/test.js&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-property">id</span>); <span class="hljs-comment">// 安装的插件id</span>
+    <span class="hljs-comment">// 安装成功</span>
+}).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);
+    <span class="hljs-comment">// 安装失败</span>
+})</code></pre><a name="quik.addon.installByOfficialMarket(url)"></a><h2><code>quik.addon.installByOfficialMarket(url)</code></h2><p>请求用户从插件商店安装一个插件，返回一个Promise。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">addon</span>.<span class="hljs-title function_">installByOfficialMarket</span>(<span class="hljs-string">&#x27;001&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-property">id</span>); <span class="hljs-comment">// 安装的插件id</span>
+    <span class="hljs-comment">// 安装成功</span>
+}).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);
+    <span class="hljs-comment">// 安装失败</span>
+})</code></pre><a name="quik.addon.uninstall(id)"></a><h2><code>quik.addon.uninstall(id)</code></h2><p>请求用户卸载一个对应id的插件，返回一个Promise。</p>
+<pre><code class="hljs hljs-javascript"><span class="hljs-comment">// 自己卸载自己演示</span>
+quik.<span class="hljs-property">addon</span>.<span class="hljs-title function_">uninstall</span>(addonData.<span class="hljs-property">session</span>.<span class="hljs-property">id</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    <span class="hljs-comment">// 卸载成功</span>
+}).<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);
+    <span class="hljs-comment">// 卸载失败</span>
+})</code></pre></div>
     </div>
     <div class="navbtn">
         <span></span><span></span>
