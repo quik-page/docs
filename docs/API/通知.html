@@ -19,8 +19,51 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">基础</div><ul><li><a href="/docs/基础/REM.html">REM</a></li><li><a href="/docs/基础/内置工具与插件数据.html">内置工具与插件数据</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html" class="act">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="通知"></a><h1>通知</h1><p>正在施工中。。。</p>
-</div>
+        <div class="markdown-body"><a name="通知 quik.notice"></a><h1>通知 <code>quik.notice</code></h1><p><code>quik.notice</code>是一个构造函数，你可以用它构造一个通知。</p>
+<a name="使用方法"></a><h2>使用方法</h2><pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> mynotice=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">notice</span>({
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;通知标题&quot;</span>,
+    <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;通知内容&quot;</span>, <span class="hljs-comment">//可填HTML</span>
+    <span class="hljs-attr">btns</span>:[{
+        <span class="hljs-attr">text</span>:<span class="hljs-string">&quot;按钮文字&quot;</span>,
+        <span class="hljs-attr">style</span>:<span class="hljs-string">&quot;ok&quot;</span>, <span class="hljs-comment">// 按钮样式，实际上就是在按钮后面加一个className，你可以在css用.btn.className自定义，内置一个ok样式</span>
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            <span class="hljs-comment">// 点击事件</span>
+        }
+    },<span class="hljs-comment">/*...*/</span>],
+
+    <span class="hljs-attr">useprogress</span>:<span class="hljs-literal">true</span>, <span class="hljs-comment">//在通知加上一个进度条，不要则不写这个属性</span>
+})
+
+mynotice.<span class="hljs-title function_">show</span>();<span class="hljs-comment">// 显示通知，通知默认不显示。</span>
+mynotice.<span class="hljs-title function_">hide</span>();<span class="hljs-comment">// 隐藏通知。</span>
+mynotice.<span class="hljs-title function_">focus</span>();<span class="hljs-comment">// 高亮通知。（仅在手机端生效，效果类似手机横幅通知）</span>
+mynotice.<span class="hljs-title function_">destroy</span>(); <span class="hljs-comment">// 销毁通知。（销毁后不可操作）</span>
+
+mynotice.<span class="hljs-title function_">setTitle</span>(title) <span class="hljs-comment">// 重新设置title</span>
+mynotice.<span class="hljs-title function_">setContent</span>(content) <span class="hljs-comment">// 重新设置content</span>
+mynotice.<span class="hljs-title function_">setBtns</span>(btns) <span class="hljs-comment">// 重新设置btns</span>
+mynotice.<span class="hljs-title function_">setProgress</span>(progress) <span class="hljs-comment">// 更新进度条进度，0&lt;=progress&lt;=1</span></code></pre><a name="示例"></a><h2>示例</h2><pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> mynotice=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">notice</span>({
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;标题&quot;</span>,
+    <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;通知内容:&lt;span&gt;Hi!&lt;/span&gt;&quot;</span>, <span class="hljs-comment">//可填HTML</span>
+    <span class="hljs-attr">btns</span>:[{
+        <span class="hljs-attr">text</span>:<span class="hljs-string">&quot;确定&quot;</span>,
+        <span class="hljs-attr">style</span>:<span class="hljs-string">&quot;ok&quot;</span>, 
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;哈哈&#x27;</span>);
+            mynotice.<span class="hljs-title function_">setContent</span>(<span class="hljs-string">&#x27;通知内容:&lt;span&gt;Hello!&lt;/span&gt;&#x27;</span>)
+        }
+    },{
+        <span class="hljs-attr">text</span>:<span class="hljs-string">&quot;取消&quot;</span>,
+        <span class="hljs-attr">click</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+            mynotice.<span class="hljs-title function_">hide</span>();
+        }
+    }],
+
+    <span class="hljs-attr">useprogress</span>:<span class="hljs-literal">true</span>, 
+    <span class="hljs-attr">progress</span>:<span class="hljs-number">0.1</span> 
+})
+
+mynotice.<span class="hljs-title function_">show</span>();</code></pre></div>
     </div>
     <div class="navbtn">
         <span></span><span></span>

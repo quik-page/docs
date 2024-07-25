@@ -124,7 +124,24 @@ xhr.<span class="hljs-title function_">abort</span>(); <span class="hljs-comment
     <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result); <span class="hljs-comment">// 成功</span>
 })</code></pre><p>该方法也像<code>util.xhr</code>一样返回一个abort方法以取消请求。</p>
 <a name="util.requestByExt(details)"></a><h3><code>util.requestByExt(details)</code></h3><p>当QUIK起始页是在浏览器扩展环境下时，可以通过扩展发送跨域请求，请求的details遵循axios配置，具体自行搜索。</p>
-</div>
+<a name="方便的方法"></a><h2>方便的方法</h2><a name="quik.alert(text,cb)"></a><h3><code>quik.alert(text,cb)</code></h3><p>显示一个提示框，用户确认时调用cb。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Hello&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    <span class="hljs-comment">// ...</span>
+})</code></pre><a name="quik.confirm(text,cb)"></a><h3><code>quik.confirm(text,cb)</code></h3><p>显示一个确认/取消框，用户选择完时调用cb，传入选择true/false。</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-title function_">confirm</span>(<span class="hljs-string">&#x27;确定吗？&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">ok</span>){
+    <span class="hljs-keyword">if</span>(ok){
+        <span class="hljs-comment">// 确定</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">// 取消</span>
+    }
+})</code></pre><a name="quik.prompt(text,cb)"></a><h3><code>quik.prompt(text,cb)</code></h3><p>显示一个输入框，用户输入完后调用cb，传入用户输入内容</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-title function_">prompt</span>(<span class="hljs-string">&#x27;输入你的姓名&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>){
+    <span class="hljs-keyword">if</span>(text){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(text);
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">// 用户输入为空或取消</span>
+    }
+})</code></pre></div>
     </div>
     <div class="navbtn">
         <span></span><span></span>

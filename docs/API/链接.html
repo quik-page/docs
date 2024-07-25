@@ -20,7 +20,193 @@
     </div>
     <div class="content">
         <div class="markdown-body"><a name="链接 quik.link"></a><h1>链接 <code>quik.link</code></h1><p><code>quik.link</code>提供了可以操作收藏链接的API</p>
-<a name="quik.link.addLink(details,callback)"></a><h2><code>quik.link.addLink(details,callback)</code></h2><p>施工中。。。</p>
+<a name="链接操作"></a><h2>链接操作</h2><a name="quik.link.addLink(details,callback)"></a><h3><code>quik.link.addLink(details,callback)</code></h3><p>添加一个链接在默认分组或其他分组中。</p>
+<p>在details中传入以下参数:</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>描述</th>
+<th>默认值</th>
+<th>必须</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>链接标题</td>
+<td>-</td>
+<td>√</td>
+</tr>
+<tr>
+<td>url</td>
+<td>链接网址</td>
+<td>-</td>
+<td>√</td>
+</tr>
+<tr>
+<td>index</td>
+<td>链接位置，不填则自动放在最后</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>cate</td>
+<td>链接分组，不填为默认分组</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>callback传入一个function，完成将传入如下参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>code</td>
+<td>为0则成功，否则失败</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>状态信息</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">link</span>.<span class="hljs-title function_">addLink</span>({
+    <span class="hljs-attr">title</span>:<span class="hljs-string">&quot;百度&quot;</span>,
+    <span class="hljs-attr">url</span>:<span class="hljs-string">&quot;https://baidu.com/&quot;</span>,
+},<span class="hljs-keyword">function</span>(<span class="hljs-params">o</span>){
+    <span class="hljs-keyword">if</span>(o.<span class="hljs-property">code</span>==<span class="hljs-number">0</span>){
+        <span class="hljs-comment">// 添加成功</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;添加失败，原因：&#x27;</span>,o.<span class="hljs-property">msg</span>);
+    }
+})</code></pre><a name="quik.link.changeLink(cate,index,details,callback)"></a><h3><code>quik.link.changeLink(cate,index,details,callback)</code></h3><p>修改链接。</p>
+<ul>
+<li>cate : 链接分组，默认分组则填null</li>
+<li>index : 链接位置，必填</li>
+<li>details : 修改后的链接，内容和上面的details一样，但index不填默认为保持原状</li>
+<li>callback : 完成后的回调函数，和上面一样。</li>
+</ul>
+<a name="quik.link.deleteLink(cate,index,callback)"></a><h3><code>quik.link.deleteLink(cate,index,callback)</code></h3><p>删除链接。</p>
+<ul>
+<li>cate : 链接分组，默认分组则填null</li>
+<li>index : 链接位置，必填</li>
+<li>callback : 完成后的回调函数，和上面一样。</li>
+</ul>
+<a name="quik.link.getLinks(cate,callback)"></a><h3><code>quik.link.getLinks(cate,callback)</code></h3><p>获取一个分组内的链接。</p>
+<ul>
+<li>cate : 链接分组，默认分组则填null</li>
+<li>callback : 完成后的回调函数，将传入如下参数：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>code</td>
+<td>为0则成功，否则失败</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td>data</td>
+<td>若获取成功，data则为一个包含获取到的链接的Array，内部结构为<code>[{title,url},...]</code></td>
+</tr>
+</tbody></table>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">link</span>.<span class="hljs-title function_">getLinks</span>(<span class="hljs-literal">null</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">o</span>){
+    <span class="hljs-keyword">if</span>(o.<span class="hljs-property">code</span>==<span class="hljs-number">0</span>){
+        <span class="hljs-keyword">var</span> links=o.<span class="hljs-property">data</span>;
+        <span class="hljs-comment">// 成功</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;获取失败，原因：&#x27;</span>,o.<span class="hljs-property">msg</span>);
+    }
+})</code></pre><a name="分组操作"></a><h2>分组操作</h2><p>在操作分组后都应执行<code>quik.link.cateWidthShiPei()</code>以保证布局正确。</p>
+<a name="quik.link.addCate(cate,callback)"></a><h3><code>quik.link.addCate(cate,callback)</code></h3><p>添加一个分组。</p>
+<p>注意：分组不能重名。</p>
+<ul>
+<li>cate : 分组名</li>
+<li>callback : 完成后的回调函数，将传入如下参数：<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>code</td>
+<td>为0则成功，否则失败</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>状态信息</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">link</span>.<span class="hljs-title function_">addCate</span>(<span class="hljs-string">&#x27;学习&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">o</span>){
+    <span class="hljs-keyword">if</span>(o.<span class="hljs-property">code</span>==<span class="hljs-number">0</span>){
+        <span class="hljs-comment">// 添加成功</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;添加失败，原因：&#x27;</span>,o.<span class="hljs-property">msg</span>);
+    }
+})</code></pre><a name="quik.link.renameCate(cate,catename,callback)"></a><h3><code>quik.link.renameCate(cate,catename,callback)</code></h3><p>重命名分组。</p>
+<p>注意：分组不能重名。</p>
+<ul>
+<li>cate : 分组名</li>
+<li>cate : 新分组名</li>
+<li>callback : 完成后的回调函数，同上。</li>
+</ul>
+<a name="quik.link.deleteCate(cate,callback)"></a><h3><code>quik.link.deleteCate(cate,callback)</code></h3><p>删除分组。</p>
+<p>注意：若该分组中的链接数量大于1，则会询问用户。</p>
+<ul>
+<li>cate : 分组名</li>
+<li>callback : 完成后的回调函数，同上。</li>
+</ul>
+<a name="quik.link.getCates(callback)"></a><h3><code>quik.link.getCates(callback)</code></h3><p>获取所有分组名</p>
+<ul>
+<li>callback : 完成后的回调函数，将传入如下参数：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>code</td>
+<td>为0则成功，否则失败</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td>data</td>
+<td>若获取成功，data则为一个包含获取到的所有分组名的Array，内部结构为<code>[catename:String,...] </code></td>
+</tr>
+</tbody></table>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">link</span>.<span class="hljs-title function_">getLinks</span>(<span class="hljs-literal">null</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">o</span>){
+    <span class="hljs-keyword">if</span>(o.<span class="hljs-property">code</span>==<span class="hljs-number">0</span>){
+        <span class="hljs-keyword">var</span> links=o.<span class="hljs-property">data</span>;
+        <span class="hljs-comment">// 成功</span>
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;获取失败，原因：&#x27;</span>,o.<span class="hljs-property">msg</span>);
+    }
+})</code></pre><a name="页面布局相关"></a><h2>页面布局相关</h2><a name="quik.link.cateWidthShiPei()"></a><h3><code>quik.link.cateWidthShiPei()</code></h3><p>刷新分组显示渲染。</p>
+<a name="quik.link.isShowCate()"></a><h3><code>quik.link.isShowCate()</code></h3><p>是否显示分组，返回true/false。</p>
+<a name="quik.link.setShowCate(isShow)"></a><h3><code>quik.link.setShowCate(isShow)</code></h3><p>设置是否显示分组，传入true/false。</p>
+<a name="quik.link.getLinkSize()"></a><h3><code>quik.link.getLinkSize()</code></h3><p>获取链接显示大小，返回“xs”(很小),“s”(小),“m”(中),“l”(大),“xl”(很大)</p>
+<a name="quik.link.setLinkSize(linksize)"></a><h3><code>quik.link.setLinkSize(linksize)</code></h3><p>设置链接显示大小，传入“xs”(很小) 或 “s”(小) 或 “m”(中) 或 “l”(大) 或 “xl”(很大)</p>
 </div>
     </div>
     <div class="navbtn">
