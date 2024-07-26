@@ -19,8 +19,29 @@
         <ul><li><div class="title">快速开始</div><ul><li><a href="/docs/快速开始/简述QUIK插件.html">简述QUIK插件</a></li><li><a href="/docs/快速开始/安装插件开发环境.html">安装插件开发环境</a></li><li><a href="/docs/快速开始/开发一个简单的插件.html">开发一个简单的插件</a></li><li><a href="/docs/快速开始/插件打包.html">插件打包</a></li></ul></li><li><div class="title">基础</div><ul><li><a href="/docs/基础/REM.html">REM</a></li><li><a href="/docs/基础/内置工具与插件数据.html">内置工具与插件数据</a></li></ul></li><li><div class="title">API</div><ul><li><a href="/docs/API/窗口.html">窗口</a></li><li><a href="/docs/API/Toast.html">Toast</a></li><li><a href="/docs/API/一言.html">一言</a></li><li><a href="/docs/API/二级菜单.html">二级菜单</a></li><li><a href="/docs/API/卡片.html">卡片</a></li><li><a href="/docs/API/图标栏.html" class="act">图标栏</a></li><li><a href="/docs/API/存储.html">存储</a></li><li><a href="/docs/API/插件.html">插件</a></li><li><a href="/docs/API/搜索框.html">搜索框</a></li><li><a href="/docs/API/背景.html">背景</a></li><li><a href="/docs/API/设置.html">设置</a></li><li><a href="/docs/API/通知.html">通知</a></li><li><a href="/docs/API/链接.html">链接</a></li></ul></li></ul>
     </div>
     <div class="content">
-        <div class="markdown-body"><a name="图标栏"></a><h1>图标栏</h1><p>正在施工中。。。</p>
-</div>
+        <div class="markdown-body"><a name="图标栏 quik.iconc"></a><h1>图标栏 <code>quik.iconc</code></h1><p>通过<code>quik.iconc.icon</code>创建一个图标在图标栏上。</p>
+<a name="使用方法"></a><h2>使用方法</h2><pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> myicon=<span class="hljs-keyword">new</span> quik.<span class="hljs-property">iconc</span>.<span class="hljs-title function_">icon</span>({
+    <span class="hljs-attr">content</span>:util.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e147&#x27;</span>), <span class="hljs-comment">// 图标内容，填入HTML字符串，必须</span>
+    <span class="hljs-attr">offset</span>:<span class="hljs-string">&#x27;bl&#x27;</span>, <span class="hljs-comment">// 图标位置，可填tl(左上)，tr(右上)，bl(左下)，br(右下)，必须</span>
+    <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;myicon&quot;</span>, <span class="hljs-comment">// 额外添加到icon的className，便于添加样式，非必须</span>
+    <span class="hljs-attr">width</span>:<span class="hljs-number">30</span>, <span class="hljs-comment">// 图标宽度，非必须</span>
+    <span class="hljs-attr">important</span>:<span class="hljs-literal">true</span> <span class="hljs-comment">// 当该属性为true时，即使是极简模式也会显示该图标</span>
+})
+<span class="hljs-comment">// 图标默认显示</span>
+myicon.<span class="hljs-title function_">show</span>(); <span class="hljs-comment">// 显示图标</span>
+myicon.<span class="hljs-title function_">hide</span>(); <span class="hljs-comment">// 隐藏图标</span>
+
+myicon.<span class="hljs-title function_">getIcon</span>(); <span class="hljs-comment">// 获取图标的HTMLElement，便于添加交互</span>
+myicon.<span class="hljs-title function_">setIcon</span>(content); <span class="hljs-comment">// 重新设置图标内容</span>
+myicon.<span class="hljs-title function_">getWidth</span>(); <span class="hljs-comment">// 获取图标的宽度</span>
+myicon.<span class="hljs-title function_">setWidth</span>(width); <span class="hljs-comment">// 重新设置图标的宽度</span></code></pre><a name="示例"></a><h2>示例</h2><pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> myicon=<span class="hljs-keyword">new</span> quik.<span class="hljs-property">iconc</span>.<span class="hljs-title function_">icon</span>({
+    <span class="hljs-attr">content</span>:util.<span class="hljs-title function_">getGoogleIcon</span>(<span class="hljs-string">&#x27;e147&#x27;</span>), 
+    <span class="hljs-attr">offset</span>:<span class="hljs-string">&#x27;bl&#x27;</span>,
+})
+myicon.<span class="hljs-title function_">getIcon</span>().<span class="hljs-property">onclick</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+    quik.<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;这是一个〇和一个+&#x27;</span>)
+}
+</code></pre></div>
     </div>
     <div class="navbtn">
         <span></span><span></span>
