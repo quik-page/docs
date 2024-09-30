@@ -23,8 +23,8 @@
 <a name="使用方法"></a><h2>使用方法</h2><p>我们可以使用<code>new quik.dialog(options)</code>来创建窗口，使用方法如下：</p>
 <pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> dialog=<span class="hljs-keyword">new</span> quik.<span class="hljs-title function_">dialog</span>({
     <span class="hljs-attr">content</span>:<span class="hljs-string">&quot;...html...&quot;</span>, <span class="hljs-comment">// 窗口内容</span>
-    <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;dialog-class-name&quot;</span>,<span class="hljs-comment">// 非必须，窗口class名，方便定义样式</span>
-    <span class="hljs-attr">mobileShowtype</span>:dialog.<span class="hljs-property">SHOW_TYPE_FULLSCREEN</span> <span class="hljs-comment">// 见下下方</span>
+    <span class="hljs-attr">class</span>:<span class="hljs-string">&quot;dialog-class-name&quot;</span>,<span class="hljs-comment">// 非必须，窗口class名，方便定义样式，可以像这样 classNameA classNameB </span>
+    <span class="hljs-attr">mobileShowtype</span>:quik.<span class="hljs-property">dialog</span>.<span class="hljs-property">SHOW_TYPE_FULLSCREEN</span> <span class="hljs-comment">// 见下下方</span>
 })
 
 dialog.<span class="hljs-property">id</span> <span class="hljs-comment">// dialog的唯一id</span>
@@ -48,7 +48,8 @@ dialog.<span class="hljs-title function_">destroy</span>() <span class="hljs-com
 <li><code>getDialogById</code>
   根据id返回对应dialog实例，如没有返回null<pre><code class="hljs hljs-javascript"><span class="hljs-keyword">var</span> dialog=quik.<span class="hljs-property">dialog</span>.<span class="hljs-title function_">getDialogById</span>(id<span class="hljs-comment">/*dialog的唯一id*/</span>)</code></pre></li>
 </ul>
-<a name="样式的注意"></a><h2>样式的注意</h2><p>因为一些样式优先级和移动端兼容的原因，你需要注意以下几点。假设你的dialog的class是your-dialog</p>
+<a name="样式的注意"></a><h2>样式的注意</h2><p>我们内置了两个关于窗口大小的样式类名，分别为<code>auto-size</code>和<code>def-size</code>，<code>def-size</code>在电脑端默认窗口大小为600px*500px，无padding，<code>auto-size</code>则是根据窗口大小自动调整大小，二者在使用时需对窗口设置<code>mobileShowtype:quik.dialog.SHOW_TYPE_FULLSCREEN</code>，因为移动端二者会全屏显示。</p>
+<p>因为一些样式优先级和移动端兼容的原因，你需要注意以下几点。假设你的dialog的class是your-dialog</p>
 <p>当设置dialog宽高时，你需要像这样：</p>
 <pre><code class="hljs hljs-css"><span class="hljs-comment">/* 要加.d-c */</span>
 <span class="hljs-selector-class">.d-c</span><span class="hljs-selector-class">.your-dialog</span>{
