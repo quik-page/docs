@@ -21,7 +21,9 @@
     <div class="content">
         <div class="markdown-body"><a name="主题"></a><h1>主题</h1><p>相当一部分插件都是提供另一个风格的主题样式，QUIK起始页内置了一个简单的API。</p>
 <p>像这样添加一个主题选项，当用户在设置选择了这个主题后，body就会添加mytheme这个className :</p>
-<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">custom</span>.<span class="hljs-title function_">addTheme</span>(<span class="hljs-string">&#x27;mytheme&#x27;</span>,<span class="hljs-string">&#x27;我的主题&#x27;</span>)</code></pre><p>然后就可以像这样自定义样式：</p>
+<pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">custom</span>.<span class="hljs-title function_">addTheme</span>(<span class="hljs-string">&#x27;mytheme&#x27;</span>,<span class="hljs-string">&#x27;我的主题&#x27;</span>,{
+    <span class="hljs-attr">color</span>:[<span class="hljs-string">&#x27;#fff&#x27;</span>,<span class="hljs-string">&#x27;#333&#x27;</span>] <span class="hljs-comment">// 推荐的背景颜色 [亮色背景色，暗色背景色] 当用户设置背景为跟随主题时应用</span>
+})</code></pre><p>然后就可以像这样自定义样式：</p>
 <pre><code class="hljs hljs-css"><span class="hljs-selector-tag">body</span><span class="hljs-selector-class">.mytheme</span> ...{
     <span class="hljs-comment">/*...*/</span>
 }</code></pre><p>主题颜色可以通过以下方式获取：</p>

@@ -21,13 +21,52 @@
     <div class="content">
         <div class="markdown-body"><a name="一言 quik.says"></a><h1>一言 <code>quik.says</code></h1><a name="quik.says.addSayType(details)"></a><h2><code>quik.says.addSayType(details)</code></h2><p>添加一种一言类型，一个插件最多添加一种。</p>
 <p>在details中传入如下参数：</p>
-<p>| 参数 | 描述 | 格式 | 默认 | 必要 |
-|--|--|--|--|
-|session|传入插件的session|Session||√|
-|name|一言类型的名称（即显示在设置选项里的内容）|String||√|
-|callback|获取一个一言的方法，该方法返回一个Promise，具体看下方示例|Function|√|
-|click|当一言被点击时调用的方法|Function|<code>function(){}</code>||
-|menu|一言旁边的菜单，菜单项的填写方式与 <a href="./%E4%BA%8C%E7%BA%A7%E8%8F%9C%E5%8D%95.html"><code>quik.menu</code></a> 一致，具体请看下方示例|Function|<code>[{...复制...}]</code>||</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>格式</th>
+<th>默认</th>
+<th>必要</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>session</td>
+<td>传入插件的session</td>
+<td>Session</td>
+<td></td>
+<td>√</td>
+</tr>
+<tr>
+<td>name</td>
+<td>一言类型的名称（即显示在设置选项里的内容）</td>
+<td>String</td>
+<td></td>
+<td>√</td>
+</tr>
+<tr>
+<td>callback</td>
+<td>获取一个一言的方法，该方法返回一个Promise，具体看下方示例</td>
+<td>Function</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>click</td>
+<td>当一言被点击时调用的方法</td>
+<td>Function</td>
+<td><code>function(){}</code></td>
+<td></td>
+</tr>
+<tr>
+<td>menu</td>
+<td>一言旁边的菜单，菜单项的填写方式与 <a href="./%E4%BA%8C%E7%BA%A7%E8%8F%9C%E5%8D%95.html"><code>quik.menu</code></a> 一致，具体请看下方示例</td>
+<td>Function</td>
+<td><code>[{...复制...}]</code></td>
+<td></td>
+</tr>
+</tbody></table>
 <pre><code class="hljs hljs-javascript">quik.<span class="hljs-property">says</span>.<span class="hljs-title function_">addSayType</span>({
     <span class="hljs-attr">session</span>:addonData.<span class="hljs-property">session</span>,
     <span class="hljs-attr">name</span>:<span class="hljs-string">&quot;测试&quot;</span>,
